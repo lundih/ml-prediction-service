@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
 
-# This tags and uploads an image to Docker Hub
+dockerpath=lundih/ml-prediction-service:latest
 
-# Step 1:
-# This is your Docker ID/path
-# dockerpath=<>
+kubectl create deployment ml-prediction-service --image=$dockerpath
 
-# Step 2
-# Run the Docker Hub container with kubernetes
+kubectl get pods --all-namespaces
 
+kubectl expose deployment ml-prediction-service --type="NodePort" --port=80
 
-# Step 3:
-# List kubernetes pods
-
-# Step 4:
-# Forward the container port to a host
-
+kubectl port-forward deployment/ml-prediction-service 8000:80
