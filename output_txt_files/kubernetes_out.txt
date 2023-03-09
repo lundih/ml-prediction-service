@@ -1,1 +1,52 @@
-<paste log output from Kubernetes-mediated prediction, here>
+[Main Terminal First attempt]
+deployment.apps/ml-prediction-service created
+NAMESPACE     NAME                                    READY   STATUS              RESTARTS        AGE
+default       ml-prediction-service-c556899b6-x2722   0/1     ContainerCreating   0               1s
+kube-system   coredns-787d4945fb-gmf5d                1/1     Running             0               7m54s
+kube-system   etcd-minikube                           1/1     Running             0               8m6s
+kube-system   kube-apiserver-minikube                 1/1     Running             0               8m6s
+kube-system   kube-controller-manager-minikube        1/1     Running             0               8m6s
+kube-system   kube-proxy-lbf8f                        1/1     Running             0               7m54s
+kube-system   kube-scheduler-minikube                 1/1     Running             0               8m6s
+kube-system   storage-provisioner                     1/1     Running             1 (7m23s ago)   8m5s
+service/ml-prediction-service exposed
+error: unable to forward port because pod is not running. Current status=Pending
+
+
+[Main Terminal Second attempt]
+error: failed to create deployment: deployments.apps "ml-prediction-service" already exists
+NAMESPACE     NAME                                    READY   STATUS    RESTARTS      AGE
+default       ml-prediction-service-c556899b6-x2722   1/1     Running   0             3m45s
+kube-system   coredns-787d4945fb-gmf5d                1/1     Running   0             11m
+kube-system   etcd-minikube                           1/1     Running   0             11m
+kube-system   kube-apiserver-minikube                 1/1     Running   0             11m
+kube-system   kube-controller-manager-minikube        1/1     Running   0             11m
+kube-system   kube-proxy-lbf8f                        1/1     Running   0             11m
+kube-system   kube-scheduler-minikube                 1/1     Running   0             11m
+kube-system   storage-provisioner                     1/1     Running   1 (11m ago)   11m
+Error from server (AlreadyExists): services "ml-prediction-service" already exists
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+
+
+[Separate Terminal - Pod Logs]
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 242-863-848
+[2023-03-09 20:51:19,731] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2023-03-09 20:51:19,741] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-03-09 20:51:19,751] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-03-09 20:51:19,754] INFO in app: output prediction: [20.35373177134412]
+127.0.0.1 - - [09/Mar/2023 20:51:19] "POST /predict HTTP/1.1" 200 -

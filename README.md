@@ -49,17 +49,18 @@ python app.py
 ```bash
 ./run_kubernetes.sh
 ```
+
 ---
 
 ## Files 
 - `app.py` - flask application that returns the predictions
 - `requirements.txt` - contains the app's dependencies
-- `Makefile` - contains commands to easily setup a virtual environment, install dependencies, and lint files<br>
+- `Makefile` - contains commands to easily setup a virtual environment, install dependencies, and lint files
 - `Dockerfile` - contains instructions on how to build a docker image
 - `run_docker.sh` - builds the docker image, tags it, and runs the container
 - `upload_docker.sh` - tags the docker image and pushes it to a repository
 - `run_kubernetes.sh` - runs the application in kubernetes
 - `make_prediciton.sh` - sends a request to the app for prediction
 - `docker_out.txt` - contains sample output of a successful response after running `make_prediciton.sh` with a successfully running container application
-- `kubernetes_out.txt` - contains sample output of the response after running `run_kubernetes.sh`
+- `kubernetes_out.txt` - contains sample output of successful response after running `make_prediciton.sh` with a successfully running application in kubernetes
 - `.circleci/config.yml` - CircleCI config file to build the app
